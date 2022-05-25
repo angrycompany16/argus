@@ -8,15 +8,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] LayerMask groundLayer;
 
-    // hei hei
+    [Header("Coyote time + jump buffer")]
+    float timeSinceJumpPressed;
+    [SerializeField] float jumpBufferDuration;
+    float timeSinceLeftGrounded;
+    [SerializeField] float jumpRememberTime;
 
-    [Header("Stats")]    
+    [Header("Stats")]
     [SerializeField] float moveSpeed;
     [SerializeField] float cutJumpSpeed;
     [SerializeField] float jumpSpeed;
-    [SerializeField] float fallForce;
     [SerializeField] float customGravityScale;
+    [SerializeField] float extraFallMultiplier;
     [SerializeField] float maxFallSpeed;
+    [SerializeField] float ledgeFallSpeed;
 
     [Space]
     [SerializeField] float groundedBaseSmoothness;
@@ -40,8 +45,9 @@ public class PlayerMovement : MonoBehaviour
     Vector2 desiredVelocity;
 
     bool isGrounded;
-    bool wantsToJump;
-    bool canJump;
+    bool wasGrounded;
+    bool jumpBuffered;
+    bool jumpRemembered;
     bool isJumping;
 
     void Start()
@@ -51,10 +57,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        JumpCheck();
         GetInput();
         MovePlayer();
         LerpMove();
-        JumpCheck();
+
+        wasGrounded = isGrounded;
     }
 
     // Gets character input...
@@ -80,8 +88,45 @@ public class PlayerMovement : MonoBehaviour
             desiredVelocity.y
         );
 
-        if (!isGrounded)
+        if (!isGrounded) {
             desiredVelocity.y -= 9.18f * customGravityScale * Time.deltaTime;
+
+            // Coyote time
+            timeSinceLeftGrounded += Time.deltaTime;
+            if (timeSinceLeftGrounded < jumpRememberTime) 
+                jumpRemembered = true;
+            else 
+                jumpRemembered = false;
+
+            // Jump buffer
+            timeSinceJumpPressed += Time.deltaTime;
+            if (timeSinceJumpPressed < jumpBufferDuration) {
+                jumpBuffered = true;
+            }
+            else {
+                jumpBuffered = false;
+            }
+
+            if (rb.velocity.y < 5f)
+                desiredVelocity.y -= extraFallMultiplier * Time.deltaTime;
+        }
+
+        // Upon landing...
+        if (!wasGrounded && isGrounded) {
+            if (jumpBuffered)
+                Jump();
+            else 
+                desiredVelocity.y = -ledgeFallSpeed;
+
+        }
+
+        // Upon jumping...
+        if (wasGrounded && !isGrounded) {
+            timeSinceLeftGrounded = 0f;
+        }
+
+        if (rb.velocity.y < -maxFallSpeed)
+            desiredVelocity.y = -maxFallSpeed * Time.deltaTime;
     }
 
     void LerpMove() {
@@ -118,20 +163,20 @@ public class PlayerMovement : MonoBehaviour
 
     void JumpCheck() {
         isGrounded = Physics2D.BoxCast(transform.position, boxCastSize, 1f, Vector2.down, groundCheckDist, groundLayer);
-
-        if(rb.velocity.y < -maxFallSpeed)
-            desiredVelocity = new Vector2(desiredVelocity.x, -maxFallSpeed);
     }
 
     void Jump() {
-        if (isGrounded) {
-            desiredVelocity = new Vector3(desiredVelocity.x, jumpSpeed);
+        timeSinceJumpPressed = 0f;
+
+        if (isGrounded || jumpRemembered) {
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            desiredVelocity.y = jumpSpeed;
         }
     }
 
     void CutJump() {
-        if (rb.velocity.y != 0) {
-            desiredVelocity = new Vector2(desiredVelocity.x, cutJumpSpeed);
+        if (rb.velocity.y > -2f) {
+            desiredVelocity.y = -cutJumpSpeed;
         }
     }
 }
