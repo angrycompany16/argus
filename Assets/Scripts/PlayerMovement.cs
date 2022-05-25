@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] LayerMask groundLayer;
 
+    // hei hei
+
     [Header("Stats")]    
     [SerializeField] float moveSpeed;
     [SerializeField] float cutJumpSpeed;
