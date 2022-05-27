@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (rb.velocity.y < -maxFallSpeed)
-            desiredVelocity.y = -maxFallSpeed * Time.deltaTime;
+            desiredVelocity.y = -maxFallSpeed;
     }
 
     void LerpMove() {

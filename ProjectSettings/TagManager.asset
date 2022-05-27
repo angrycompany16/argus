@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - RoomTransition
   layers:
   - Default
   - TransparentFX
@@ -40,4 +41,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BG2
+    uniqueID: 2826455273
+    locked: 0
+  - name: BG1
+    uniqueID: 1378141473
+    locked: 0
+  - name: MG2
+    uniqueID: 1748831655
+    locked: 0
+  - name: MG1
+    uniqueID: 419684817
+    locked: 0
+  - name: Playerspace
+    uniqueID: 4062619265
+    locked: 0
+  - name: FG2
+    uniqueID: 2395614973
+    locked: 0
+  - name: FG1
+    uniqueID: 2415462941
     locked: 0
