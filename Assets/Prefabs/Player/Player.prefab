@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4600164531098691901}
   - component: {fileID: 4600164531098691874}
   - component: {fileID: 4600164531098691902}
+  - component: {fileID: 617766902}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4600164531098691875}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.48399428, y: -0.4658357, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -105,8 +106,8 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 363b028deb111c44ba9cc6b4013d6584, type: 2}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &4600164531098691874
 BoxCollider2D:
@@ -154,8 +155,8 @@ MonoBehaviour:
   jumpRememberTime: 0
   moveSpeed: 7
   cutJumpSpeed: 3.5
-  jumpSpeed: 11.5
-  customGravityScale: 1.75
+  jumpSpeed: 12
+  customGravityScale: 2
   extraFallMultiplier: 10
   maxFallSpeed: 20
   ledgeFallSpeed: 3
@@ -169,3 +170,15 @@ MonoBehaviour:
   fallSmoothnessDropping: 7
   boxCastSize: {x: 0.7, y: 0.9}
   groundCheckDist: 0.2
+--- !u!114 &617766902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4600164531098691875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01cf3983ef69bda5b8bc565ae73ca4df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

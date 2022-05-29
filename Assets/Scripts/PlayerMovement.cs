@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+// using System.Collections;
+// using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -23,15 +23,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxFallSpeed;
     [SerializeField] float ledgeFallSpeed;
 
-    [Space]
-    [SerializeField] float groundedBaseSmoothness;
-    [SerializeField] float groundedMoveSmoothness;
-    [SerializeField] float groundedStopSmoothness;
-
-    [Space]
-    [SerializeField] float airBaseSmoothness;
-    [SerializeField] float airMoveSmoothness;
-    [SerializeField] float airStopSmoothness;
+    [Header("Horizontal movement")]
+    [Range(0, 1)]
+    [SerializeField] float dampingBasic = 0.4f;
+    [Range(0, 1)]
+    [SerializeField] float dampingWhenStopping = 0.95f;
+    [Range(0, 1)]
+    [SerializeField] float dampingWhenTurning = 0.8f;
+    [Range(0, 1)]
+    [SerializeField] float airDampingBasic = 0.4f;
+    [Range(0, 1)]
+    [SerializeField] float airDampingWhenStopping = 0.4f;
+    [Range(0, 1)]
+    [SerializeField] float airDampingWhenTurning = 0.5f;
 
     [Space]
     [SerializeField] float fallSmoothness;
@@ -42,7 +46,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float groundCheckDist;
 
     Vector2 moveDir;
-    Vector2 desiredVelocity;
 
     bool isGrounded;
     bool wasGrounded;
@@ -59,8 +62,7 @@ public class PlayerMovement : MonoBehaviour
     {
         JumpCheck();
         GetInput();
-        MovePlayer();
-        LerpMove();
+        Movement();
 
         wasGrounded = isGrounded;
     }
@@ -82,15 +84,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Movement horizontal...
-    void MovePlayer() {
-        desiredVelocity = new Vector2(
-            moveDir.x * moveSpeed,
-            desiredVelocity.y
-        );
-
+    void Movement() {
         if (!isGrounded) {
-            desiredVelocity.y -= 9.18f * customGravityScale * Time.deltaTime;
-
             // Coyote time
             timeSinceLeftGrounded += Time.deltaTime;
             if (timeSinceLeftGrounded < jumpRememberTime) 
@@ -108,16 +103,13 @@ public class PlayerMovement : MonoBehaviour
             }
 
             if (rb.velocity.y < 5f)
-                desiredVelocity.y -= extraFallMultiplier * Time.deltaTime;
+                rb.velocity -= new Vector2(0f, extraFallMultiplier * Time.deltaTime);
         }
 
         // Upon landing...
         if (!wasGrounded && isGrounded) {
             if (jumpBuffered)
                 Jump();
-            else 
-                desiredVelocity.y = -ledgeFallSpeed;
-
         }
 
         // Upon jumping...
@@ -126,39 +118,34 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (rb.velocity.y < -maxFallSpeed)
-            desiredVelocity.y = -maxFallSpeed;
+            rb.velocity = new Vector2(rb.velocity.x, -maxFallSpeed);
     }
 
-    void LerpMove() {
-        float xVel = 0f;
-        float yVel = 0f;
-        if (isGrounded) {
-            if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(moveDir.x)) {
-                xVel = Mathf.Lerp(rb.velocity.x, desiredVelocity.x, Time.deltaTime * groundedMoveSmoothness);
-            } else if (moveDir.x == 0) {
-                xVel = Mathf.Lerp(rb.velocity.x, desiredVelocity.x, Time.deltaTime * groundedStopSmoothness);
-            } else {
-                xVel = Mathf.Lerp(rb.velocity.x, desiredVelocity.x, Time.deltaTime * groundedBaseSmoothness);
-            }
+    void FixedUpdate() {
+        MoveCharacter();
+    }
 
-            yVel = Mathf.Lerp(rb.velocity.y, desiredVelocity.y, Time.deltaTime * fallSmoothness);
+    void MoveCharacter() {
+        float hrzVelocity = rb.velocity.x;
+        hrzVelocity += moveDir.x * moveSpeed;
+
+        if(isGrounded) {
+            if (Mathf.Abs(moveDir.x) < 0.01f)
+                hrzVelocity *= Mathf.Pow(1f - dampingWhenStopping, Time.deltaTime * 10f);
+            else if (Mathf.Sign(moveDir.x) != Mathf.Sign(hrzVelocity))
+                hrzVelocity *= Mathf.Pow(1f - dampingWhenTurning, Time.deltaTime * 10f);
+            else
+                hrzVelocity *= Mathf.Pow(1f - dampingBasic, Time.deltaTime * 10f);
         } else {
-            if (Mathf.Sign(rb.velocity.x) != Mathf.Sign(moveDir.x)) {
-                xVel = Mathf.Lerp(rb.velocity.x, desiredVelocity.x, Time.deltaTime * airMoveSmoothness);
-            } else if (moveDir.x == 0) {
-                xVel = Mathf.Lerp(rb.velocity.x, desiredVelocity.x, Time.deltaTime * airStopSmoothness);
-            } else {
-                xVel = Mathf.Lerp(rb.velocity.x, desiredVelocity.x, Time.deltaTime * airBaseSmoothness);
-            }
-
-            if (Mathf.Sign(rb.velocity.y) != Mathf.Sign(desiredVelocity.y)) {
-                yVel = Mathf.Lerp(rb.velocity.y, desiredVelocity.y, Time.deltaTime * fallSmoothnessDropping);
-            } else {
-                yVel = Mathf.Lerp(rb.velocity.y, desiredVelocity.y, Time.deltaTime * fallSmoothness);
-            }
-        } 
-
-        rb.velocity = new Vector2(xVel, yVel);
+            if (Mathf.Abs(moveDir.x) < 0.01f)
+                hrzVelocity *= Mathf.Pow(1f - airDampingWhenStopping, Time.deltaTime * 10f);
+            else if (Mathf.Sign(moveDir.x) != Mathf.Sign(hrzVelocity))
+                hrzVelocity *= Mathf.Pow(1f - airDampingWhenTurning, Time.deltaTime * 10f);
+            else
+                hrzVelocity *= Mathf.Pow(1f - airDampingBasic, Time.deltaTime * 10f);
+        }
+        
+        rb.velocity = new Vector2(hrzVelocity, rb.velocity.y);
     }
 
     void JumpCheck() {
@@ -170,13 +157,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded || jumpRemembered) {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-            desiredVelocity.y = jumpSpeed;
         }
     }
 
     void CutJump() {
         if (rb.velocity.y > -2f) {
-            desiredVelocity.y = -cutJumpSpeed;
+            rb.velocity = new Vector3(rb.velocity.x, -cutJumpSpeed);
         }
     }
 }

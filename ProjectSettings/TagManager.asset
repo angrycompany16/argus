@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - RoomTransition
+  - GameManager
   layers:
   - Default
   - TransparentFX
@@ -56,6 +57,9 @@ TagManager:
     locked: 0
   - name: Playerspace
     uniqueID: 4062619265
+    locked: 0
+  - name: Player
+    uniqueID: 3271121801
     locked: 0
   - name: FG2
     uniqueID: 2395614973
