@@ -74,11 +74,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -232348031
-  m_SortingLayer: 5
+  m_SortingLayerID: -1023845495
+  m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.48591068, g: 0.8962264, b: 0.46925062, a: 1}
+  m_Sprite: {fileID: 21300000, guid: e08756a6b087a4a1a8391e705d0cc2d2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -122,18 +122,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.008899748, y: -0.029050529}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 1.5}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6024809, y: 1.4140881}
   m_EdgeRadius: 0
 --- !u!114 &4600164531098691902
 MonoBehaviour:
@@ -153,23 +153,23 @@ MonoBehaviour:
     m_Bits: 8
   jumpBufferDuration: 0.1
   jumpRememberTime: 0
-  moveSpeed: 7
+  moveSpeed: 5
   cutJumpSpeed: 3.5
-  jumpSpeed: 12
-  customGravityScale: 2
-  extraFallMultiplier: 10
+  jumpSpeed: 10.5
+  customGravityScale: 1.5
+  extraFallMultiplier: 5
   maxFallSpeed: 20
   ledgeFallSpeed: 3
-  groundedBaseSmoothness: 15
-  groundedMoveSmoothness: 13
-  groundedStopSmoothness: 10
-  airBaseSmoothness: 10
-  airMoveSmoothness: 7
-  airStopSmoothness: 5
+  dampingBasic: 0.95
+  dampingWhenStopping: 0.8
+  dampingWhenTurning: 0.7
+  airDampingBasic: 0.95
+  airDampingWhenStopping: 0.8
+  airDampingWhenTurning: 0.7
   fallSmoothness: 75
   fallSmoothnessDropping: 7
-  boxCastSize: {x: 0.7, y: 0.9}
-  groundCheckDist: 0.2
+  boxCastSize: {x: 0.3, y: 0.9}
+  groundCheckDist: 0.4
 --- !u!114 &617766902
 MonoBehaviour:
   m_ObjectHideFlags: 0

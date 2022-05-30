@@ -23431,96 +23431,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4600164531098691874, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_Size.x
-      value: 0.6024809
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691874, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_Size.y
-      value: 1.4140881
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691874, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.008899748
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691874, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.029050529
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691874, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691874, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4600164531098691875, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691900, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e08756a6b087a4a1a8391e705d0cc2d2, type: 3}
-    - target: {fileID: 4600164531098691900, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691900, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691900, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691900, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_SortingLayer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691900, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1023845495
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: moveSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: dampingBasic
-      value: 0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: boxCastSize.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: airDampingBasic
-      value: 0.95
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: groundCheckDist
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: customGravityScale
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: dampingWhenTurning
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: dampingWhenStopping
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: airDampingWhenTurning
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600164531098691902, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
-      propertyPath: airDampingWhenStopping
-      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 4600164531098691903, guid: 4ca3870b87a67e43685cff74d4cb1bcf, type: 3}
       propertyPath: m_RootOrder
