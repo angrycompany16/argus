@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Components")]
     [SerializeField] Rigidbody2D rb;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] CustomAnimator anim;
 
     [Header("Coyote time + jump buffer")]
     float timeSinceJumpPressed;
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float extraFallMultiplier;
     [SerializeField] float maxFallSpeed;
     [SerializeField] float ledgeFallSpeed;
+    [SerializeField] float doubleJumpSpeed;
 
     [Header("Horizontal movement")]
     [Range(0, 1)]
@@ -47,11 +49,21 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 moveDir;
 
+    int jumpCounter;
+ 
     bool isGrounded;
     bool wasGrounded;
     bool jumpBuffered;
     bool jumpRemembered;
-    bool isJumping;
+    public bool isDashing = false;
+    bool facingRight = true;
+
+
+#region animations
+    const string RUN = "Player-run";
+    const string IDLE = "Idle";
+#endregion
+
 
     void Start()
     {
@@ -60,9 +72,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        JumpCheck();
-        GetInput();
-        Movement();
+        if (!isDashing) {
+            JumpCheck();
+            GetInput();
+            HandleAnimations();
+            Movement();
+        }
 
         wasGrounded = isGrounded;
     }
@@ -80,6 +95,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Z)) {
             CutJump();
+        }
+    }
+
+    void HandleAnimations() {
+        if (Mathf.Abs(moveDir.x) > 0) {
+            anim.ChangeAnimationState(RUN);
+        } else {
+            anim.ChangeAnimationState(IDLE);
         }
     }
 
@@ -108,17 +131,27 @@ public class PlayerMovement : MonoBehaviour
 
         // Upon landing...
         if (!wasGrounded && isGrounded) {
+            jumpCounter = 0;
             if (jumpBuffered)
                 Jump();
         }
 
         // Upon jumping...
         if (wasGrounded && !isGrounded) {
+            jumpCounter++;
             timeSinceLeftGrounded = 0f;
         }
 
         if (rb.velocity.y < -maxFallSpeed)
             rb.velocity = new Vector2(rb.velocity.x, -maxFallSpeed);
+
+        if (moveDir.x > 0)
+            facingRight = true;
+        else if (moveDir.x < 0)
+            facingRight = false;
+
+        transform.localEulerAngles = facingRight ? new Vector3(0f, 0f, 0f) : new Vector3(0f, 180f, 0f);
+
     }
 
     void FixedUpdate() {
@@ -157,6 +190,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded || jumpRemembered) {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        } else if (jumpCounter < 2) {
+            jumpCounter++;
+            rb.velocity = new Vector2(rb.velocity.x, doubleJumpSpeed);
         }
     }
 

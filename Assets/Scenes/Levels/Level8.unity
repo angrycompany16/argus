@@ -641,7 +641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 795792868535699144, guid: a478bea8dcdaf16b2906cc902b264a53, type: 3}
       propertyPath: targetScene
-      value: Level-top
+      value: Level17
       objectReference: {fileID: 0}
     - target: {fileID: 1535915256449042405, guid: a478bea8dcdaf16b2906cc902b264a53, type: 3}
       propertyPath: m_Name
@@ -767,7 +767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 795792868535699144, guid: a478bea8dcdaf16b2906cc902b264a53, type: 3}
       propertyPath: targetScene
-      value: Level-x
+      value: Level15
       objectReference: {fileID: 0}
     - target: {fileID: 1535915256449042405, guid: a478bea8dcdaf16b2906cc902b264a53, type: 3}
       propertyPath: m_Name
